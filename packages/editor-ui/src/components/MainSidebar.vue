@@ -18,11 +18,13 @@
 		<n8n-menu :items="mainMenuItems" :collapsed="isCollapsed" @select="handleSelect">
 			<template #header>
 				<div :class="$style.logo">
-					<img
+					<p v-if="isCollapsed" :class="$style.titlePageCollapsed">P</p>
+					<p v-if="!isCollapsed" :class="$style.titlePage">Prover</p>
+					<!-- <img
 						:src="basePath + (isCollapsed ? 'n8n-logo-collapsed.svg' : 'n8n-logo-expanded.svg')"
 						:class="$style.icon"
 						alt="n8n"
-					/>
+					/> -->
 				</div>
 			</template>
 
@@ -601,6 +603,20 @@ export default defineComponent({
 			display: initial;
 		}
 	}
+}
+
+.titlePage {
+	color: #477BFF; 
+	font-size: 20px; 
+	font-weight: 600;
+	padding-left: 50px;
+}
+
+.titlePageCollapsed {
+	color: #477BFF; 
+	font-size: 20px; 
+	font-weight: 600;
+	padding-left: 14px;
 }
 
 @media screen and (max-height: 470px) {
