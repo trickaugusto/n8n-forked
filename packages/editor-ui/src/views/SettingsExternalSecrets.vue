@@ -36,7 +36,7 @@ function goToUpgrade() {
 	<div class="pb-3xl">
 		<n8n-heading size="2xlarge">{{ i18n.baseText('settings.externalSecrets.title') }}</n8n-heading>
 		<div
-			v-if="externalSecretsStore.isEnterpriseExternalSecretsEnabled"
+			v-if="externalSecretsStore.isEnterpriseExternalSecretsEnabled || true"
 			data-test-id="external-secrets-content-licensed"
 		>
 			<n8n-callout theme="secondary" class="mt-2xl mb-l">

@@ -7,6 +7,7 @@ import type { VariablesRequest } from '@/requests';
 import { VariablesService } from './variables.service';
 import { EEVariablesController } from './variables.controller.ee';
 import Container from 'typedi';
+import { EEVariablesService, VariablesValidationError } from './variables.service.ee';
 
 export const variablesController = express.Router();
 
@@ -34,9 +35,31 @@ variablesController.get(
 );
 
 variablesController.post(
-	'/',
+/*	'/',
 	ResponseHelper.send(async () => {
 		throw new ResponseHelper.BadRequestError('No variables license found');
+	}), */
+	'/',
+	ResponseHelper.send(async (req: VariablesRequest.Create) => {
+		if (req.user.globalRole.name !== 'owner') {
+			LoggerProxy.info('Attempt to update a variable blocked due to lack of permissions', {
+				userId: req.user.id,
+			});
+			throw new ResponseHelper.AuthError('Unauthorized');
+		}
+		
+		const variable = req.body;
+		delete variable.id;
+		try {
+			return await Container.get(EEVariablesService).create(variable);
+		} catch (error) {
+			/* if (error instanceof VariablesLicenseError) {
+				throw new ResponseHelper.BadRequestError(error.message);
+			} else*/ if (error instanceof VariablesValidationError) {
+				throw new ResponseHelper.BadRequestError(error.message);
+			} 
+			throw error;
+		}
 	}),
 );
 
@@ -54,8 +77,30 @@ variablesController.get(
 
 variablesController.patch(
 	'/:id(\\w+)',
-	ResponseHelper.send(async () => {
+	/* ResponseHelper.send(async () => {
 		throw new ResponseHelper.BadRequestError('No variables license found');
+	}), */
+	ResponseHelper.send(async (req: VariablesRequest.Update) => {
+		const id = req.params.id;
+		if (req.user.globalRole.name !== 'owner') {
+			LoggerProxy.info('Attempt to update a variable blocked due to lack of permissions', {
+				id,
+				userId: req.user.id,
+			});
+			throw new ResponseHelper.AuthError('Unauthorized');
+		}
+		const variable = req.body;
+		delete variable.id;
+		try {
+			return await Container.get(EEVariablesService).update(id, variable);
+		} catch (error) {
+			/* if (error instanceof VariablesLicenseError) {
+				throw new ResponseHelper.BadRequestError(error.message);
+			} else */if (error instanceof VariablesValidationError) {
+				throw new ResponseHelper.BadRequestError(error.message);
+			} 
+			throw error;
+		}
 	}),
 );
 

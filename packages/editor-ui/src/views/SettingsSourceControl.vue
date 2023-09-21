@@ -186,7 +186,7 @@ const onSelectSshKeyType = async (sshKeyType: TupleToUnion<SshKeyTypes>) => {
 			locale.baseText('settings.sourceControl.title')
 		}}</n8n-heading>
 		<div
-			v-if="sourceControlStore.isEnterpriseSourceControlEnabled"
+			v-if="sourceControlStore.isEnterpriseSourceControlEnabled || true"
 			data-test-id="source-control-content-licensed"
 		>
 			<n8n-callout theme="secondary" icon="info-circle" class="mt-2xl mb-l">

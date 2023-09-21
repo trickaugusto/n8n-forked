@@ -42,12 +42,14 @@ const valueInputRef = ref<HTMLElement>();
 
 const usage = ref(`$vars.${props.data.key}`);
 
-const isFeatureEnabled = computed(() =>
+/* const isFeatureEnabled = computed(() =>
 	settingsStore.isEnterpriseFeatureEnabled(EnterpriseEditionFeature.Variables),
-);
+); */
+
+const isFeatureEnabled = true;
 
 const showActions = computed(
-	() => isFeatureEnabled.value && (permissions.edit || permissions.delete),
+	() => /* isFeatureEnabled.value */ isFeatureEnabled && (permissions.edit || permissions.delete),
 );
 
 onMounted(() => {

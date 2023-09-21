@@ -155,6 +155,7 @@ export default defineComponent({
 			return process.env.NODE_ENV;
 		},
 		isLicensed(): boolean {
+			return true;
 			if (this.disableLicense === true) return false;
 			return this.settingsStore.isEnterpriseFeatureEnabled(EnterpriseEditionFeature.LogStreaming);
 		},

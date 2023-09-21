@@ -162,7 +162,7 @@ onMounted(async () => {
 				{{ i18n.baseText('settings.sso.info.link') }}
 			</a>
 		</n8n-info-tip>
-		<div v-if="ssoStore.isEnterpriseSamlEnabled" data-test-id="sso-content-licensed">
+		<div v-if="ssoStore.isEnterpriseSamlEnabled || true" data-test-id="sso-content-licensed">
 			<div :class="$style.group">
 				<label>{{ i18n.baseText('settings.sso.settings.redirectUrl.label') }}</label>
 				<CopyInput

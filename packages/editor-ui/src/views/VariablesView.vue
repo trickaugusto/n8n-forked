@@ -42,10 +42,14 @@ const editMode = ref<Record<string, boolean>>({});
 
 const permissions = getVariablesPermissions(usersStore.currentUser);
 
-const isFeatureEnabled = computed(() =>
+/* const isFeatureEnabled = computed(() =>
 	settingsStore.isEnterpriseFeatureEnabled(EnterpriseEditionFeature.Variables),
-);
-const canCreateVariables = computed(() => isFeatureEnabled.value && permissions.create);
+); */
+
+const isFeatureEnabled = true;
+
+const canCreateVariables = computed(() => /* isFeatureEnabled.value */isFeatureEnabled && permissions.create);
+/* const canCreateVariables = true; */
 
 const datatableColumns = computed<DatatableColumn[]>(() => [
 	{
